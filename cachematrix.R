@@ -29,18 +29,20 @@
 ##
 ##
 ##
+##
+##
 ## a function wich recieves a matrix and return a list
 ## with followin functions: 
 ## get() - returns the original matrix
-## set() - set the matrix
+## set(m) - set the matrix, inverse matrix to NULL
 ## setinverse(m) - sets the inversed matrix
 ## getinverse() - return the inversed matrix or NULL
 makeCacheMatrix <- function(x = matrix()) {
         
         inverseMatrix <- NULL
         
-        set <- function(y) {
-          x <<- y
+        set <- function(pMatrix) {
+          x <<- pMatrix
           inverseMatrix <<- NULL
         }
         
