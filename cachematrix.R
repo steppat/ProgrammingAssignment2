@@ -1,4 +1,11 @@
-## 
+## The makeCacheMatrix(..) is a function which receives a matrix and returns a list 
+## object with some internal get and set functions. get/set functions are to return 
+## and receive the matrix, getinverse/setinverse are to return and receive the 
+## matrix inverse.  
+##
+## The cacheSolve(..) is a function which computes the matrix inverse and caches 
+## the result.
+##
 ## Usage:
 ## source("cachematrix.R")
 ##
@@ -29,28 +36,26 @@
 ##
 ##
 ##
-##
-##
-## a function wich recieves a matrix and return a list
-## with followin functions: 
+## A function wich receives a matrix and returns a list
+## with following functions: 
 ## get() - returns the original matrix
-## set(m) - set the matrix, inverse matrix to NULL
-## setinverse(m) - sets the inversed matrix
-## getinverse() - return the inversed matrix or NULL
+## set(m) - set the matrix, matrixInverse to NULL
+## setinverse(m) - set the matrixInverse
+## getinverse() - returns the matrixInverse or NULL
 makeCacheMatrix <- function(x = matrix()) {
         
-        inverseMatrix <- NULL
+        matrixInverse <- NULL
         
         set <- function(pMatrix) {
           x <<- pMatrix
-          inverseMatrix <<- NULL
+          matrixInverse <<- NULL
         }
         
         get <- function() {
           x
         }
-        setinverse <- function(pMatrix) inverseMatrix <<- pMatrix
-        getinverse <- function() inverseMatrix
+        setinverse <- function(pMatrix) matrixInverse <<- pMatrix
+        getinverse <- function() matrixInverse
         
         list(get = get, 
              set = set,
@@ -58,12 +63,12 @@ makeCacheMatrix <- function(x = matrix()) {
              getinverse = getinverse)
 }
 
-## function which recieves a matrix and calculates its inversed matrix,
-## the inversed matrix gets cached
-## cache is only used if x has not changed
+## Function which receives the special object created by 'makeCacheMatrix' and 
+## calculates its matrix inverse if it was not calculated before.
+## The matrix inverse gets cached by calling the 'setinverse' function.
+## To invert the matrix the solve function was used.
 cacheSolve <- function(x, ...) {
   
-        ## Return a matrix that is the inverse of 'x'
         inverse <- x$getinverse()
         if(!is.null(inverse)) {
           message("getting cached data")
